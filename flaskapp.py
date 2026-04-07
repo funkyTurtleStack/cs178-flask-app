@@ -64,7 +64,26 @@ def display_users():
     return render_template('display_users.html', users = users_list)
 
 
-##### The route I made in class #####
+"""==============================================================="""
+"""This was used for testing. Remove it in end product if not used"""
+"""==============================================================="""
+
+@app.route('/viewdb')
+def viewdb():
+    """
+    Fetches the first 20 items from the ProjectOneStore database
+    and returns them as an HTML table.
+    Route: /viewdb
+    """
+    rows = execute_query("""
+        SELECT Inventory.ID, Inventroy.description, Inventory.price, Inventory.categoryID, Category.name
+        FROM Inventory
+        JOIN Category USING (categoryID)
+        LIMIT 20
+    """)
+    return display_html(rows)
+
+"""==============================================================="""
 
 
 
