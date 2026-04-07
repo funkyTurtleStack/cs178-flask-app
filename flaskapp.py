@@ -76,7 +76,7 @@ def viewdb():
     Route: /viewdb
     """
     rows = execute_query("""
-        SELECT Inventory.ID, Inventroy.description, Inventory.price, Inventory.categoryID, Category.name
+        SELECT Inventory.ID, Inventory.description, Inventory.price, Inventory.categoryID, Category.name
         FROM Inventory
         JOIN Category USING (categoryID)
         LIMIT 20
