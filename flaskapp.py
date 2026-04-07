@@ -79,6 +79,7 @@ def viewdb():
         SELECT Inventory.ID, Inventory.description, Inventory.price, Inventory.categoryID, Category.name
         FROM Inventory
         JOIN Category USING (categoryID)
+        ORDER BY Inventory.ID
         LIMIT 20
     """)
     return rows
