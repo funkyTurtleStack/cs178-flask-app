@@ -81,7 +81,7 @@ def viewdb():
         JOIN Category USING (categoryID)
         LIMIT 20
     """)
-    return display_html(rows)
+    return rows
 
 """==============================================================="""
 
