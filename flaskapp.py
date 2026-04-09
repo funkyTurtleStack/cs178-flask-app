@@ -17,10 +17,12 @@ app.secret_key = 'your_secret_key' # this is an artifact for using flash display
                                    # it is required, but you can leave this alone
 
 ####### PAGE ROUTES #######
+"""
 @app.route('/')
 def landingPage():
     '''Brings user to the landing page and redirects if they are signed in'''
-
+"""
+    
 @app.route('/SignInPage', methods=['GET'])
 def signInPage():
     '''Brings user to the signin page'''
