@@ -88,7 +88,7 @@ def makePurchase():
 
 
 
-'''
+''''''
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -160,7 +160,7 @@ def viewdb():
 
 """==============================================================="""
 
-'''
+''''''
 
 # these two lines of code should always be the last in the file
 if __name__ == '__main__':
