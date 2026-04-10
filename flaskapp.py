@@ -30,8 +30,10 @@ DynamoRegionName = creds.DynamoRegion
 dynamodb = boto3.resource('dynamodb', region_name=DynamoRegionName)
 dynamoTable = dynamodb.Table(DynamoTableName)
 
+
 ####### PAGE ROUTES #######
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/')
 def landingPage():
     '''Brings user to the landing page and redirects if they are signed in'''
@@ -40,6 +42,7 @@ def landingPage():
     
     return render_template('landing_page.html')
     
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/SignInPage', methods=['GET'])
 def signInPage():
     '''Brings user to the signin page'''
@@ -48,6 +51,7 @@ def signInPage():
 
     return render_template('sign_in_page.html')
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/SignUpPage', methods=['GET'])
 def signUpPage():
     '''Brings user to the sign up page'''
@@ -56,14 +60,17 @@ def signUpPage():
 
     return render_template('sign_up_page.html')
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/HomePage', methods=['GET'])
 def homePage():
     '''Brings user to the home page'''
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/UserPage', methods=['GET'])
 def userPage():
     '''Brings user to user page'''
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/CheckoutPage', methods=['GET'])
 def checkoutPage():
     '''Brings user ot checkout page'''
@@ -72,14 +79,17 @@ def checkoutPage():
 ####### Action Routes #######
 ##-!-!- No Encryption Yet -!-!-##
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/SignIn', methods=['POST'])
 def signIn():
     '''Signs in user and creates session'''
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/SignOut', methods=['POST'])
 def signOut():
     '''Signs out user and deletes session'''
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/CreateUser', methods=['POST'])
 def createUser():
     '''Creates a new user (email must be unique)'''
@@ -115,33 +125,48 @@ def createUser():
         else:
             raise
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/ChangeUsername', methods=['PUT'])
 def changeUsername():
     '''Changes a user's username'''
     #remember to incorporate flash message
     #remember to make sure the user can only change their own
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/ChangePassword', methods=['PUT'])
 def changePassword():
     '''Changes a user's password'''
     #remember to incorporate flash message
     #remember to make sure the user can only change their own
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/ChangeEmail', methods=['PUT'])
 def changeEmail():
     '''Changes a user's email'''
     #remember to incorporate flash message
     #remember to make sure the user can only change their own
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/DeleteAccount', methods=['DELETE'])
 def deleteAccount():
     '''Deletes a user's account'''
     #remember to incorporate flash message
     #remember to make sure the user can only delete their own
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/MakePurchase', methods=['PUT'])
 def makePurchase():
     '''Reduces the stock of items in the database based on how many of each item the user has in their cart'''
+
+
+
+
+
+
+
+
+
+
 
 
 
