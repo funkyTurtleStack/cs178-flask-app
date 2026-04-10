@@ -5,13 +5,10 @@
 
 ############## Day 15 Slides Has Useful Info ##############
 
-
-from flask import Flask
-from flask import render_template
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from datetime import timedelta
 from dbCodeRDS import *
 from dbCodeDynamo import*
-
 import boto3
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
@@ -19,8 +16,12 @@ from botocore.exceptions import ClientError
 import creds
 
 app = Flask(__name__)
+
+#-!-!-!-!-!- In the actual thing make sure this is actually a secret string -!-!-!-!-!-#
 app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
                                    # it is required, but you can leave this alone
+
+app.permanent_session_lifetime = timedelta(days=7)
 
 #constants
 DynamoTableName = creds.TABLE_NAME_Dynamo
@@ -98,7 +99,13 @@ def createUser():
         )
         flash('User created successfully!', 'success')
 
-        ######### create session and send them to the right page #########
+        #creating a new session
+        session.permanent = True
+        session['username'] = username
+        session['email'] = email
+        session['cart'] = []
+        flash('You are now logged in', 'success')
+
         return redirect(url_for('landingPage'))
 
     except ClientError as e:
