@@ -104,13 +104,9 @@ def createUser():
     except ClientError as e:
         if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
             flash('Email already exists! Please use a different email!', 'error')
+            return redirect(url_for('signUpPage'))
         else:
             raise
-    
-    flash('User created successfully!', 'success')
-
-    ######### create session and send them to the right page
-    return redirect(url_for('landingPage'))
 
 @app.route('/ChangeUsername', methods=['PUT'])
 def changeUsername():
