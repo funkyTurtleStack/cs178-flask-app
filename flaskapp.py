@@ -82,7 +82,9 @@ def signUpPage():
 def homePage():
     '''Brings user to the home page'''
 
-    ######### if statement that redirects to landing page if session doesn't exist #########
+    #if statement that redirects to landing page if session doesn't exist
+    if 'username' not in session:
+        return redirect(url_for('landingPage'))
 
     return render_template('home_page.html')
 
