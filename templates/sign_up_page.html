@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Sign In</title>
+  </head>
+  <body>
+    <h1>Add New User</h1>
+    <form action="{{ url_for('SignUpPage') }}" method="post">
+      <label for="email">Email:</label><br />
+      <input type="text" id="email" name="email" required /><br />
+      <label for="username">Username:</label><br />
+      <input type="text" id="username" name="username" required /><br />
+      <label for="password">Password:</label><br />
+      <input type="text" id="password" name="password" required /><br />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
