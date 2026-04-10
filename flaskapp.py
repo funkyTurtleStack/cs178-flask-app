@@ -114,10 +114,12 @@ def signIn():
     
     userInfo = items[0]
 
+    #check that password is correct and create the session
     if(password == userInfo['Password']):
         createSession(email, userInfo['Email'])
         return redirect(url_for('homePage'))
     
+    #notify user that either their password or email is wrong
     flash('Incorrect credentials', 'error')
     return redirect(url_for('signInPage'))
 
