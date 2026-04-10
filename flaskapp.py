@@ -309,8 +309,7 @@ def viewdb():
         ORDER BY Inventory.ID
         LIMIT 20
     """)
-    return render_template('home_page.html', items=rows)
-    #return rows
+    return rows
 
 @app.route('/DebugSession')
 def debugSession():
