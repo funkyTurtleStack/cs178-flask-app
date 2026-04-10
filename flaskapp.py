@@ -85,8 +85,16 @@ def homePage():
     #if statement that redirects to landing page if session doesn't exist
     if 'username' not in session:
         return redirect(url_for('landingPage'))
+    
+    rows = execute_query("""
+        SELECT Inventory.ID, Inventory.description, Inventory.price, Inventory.categoryID, Category.name
+        FROM Inventory
+        JOIN Category USING (categoryID)
+        ORDER BY Inventory.ID
+        LIMIT 20
+    """)
 
-    return render_template('home_page.html')
+    return render_template('home_page.html', items=rows)
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/UserPage', methods=['GET'])
@@ -209,12 +217,12 @@ def deleteAccount():
     #remember to make sure the user can only delete their own
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/MakePurchase', methods=['PUT'])
+@app.route('/MakePurchase', methods=['POST'])
 def makePurchase():
     '''Reduces the stock of items in the database based on how many of each item the user has in their cart'''
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/AddItem', methods=['PUT', 'GET'])
+@app.route('/AddItem', methods=['POST', 'GET'])
 def addItem():
     '''Adds an item to the user's cart'''
     #copies the cart
@@ -226,9 +234,8 @@ def addItem():
     #replaces the cart with the newly made one
     session['cart'] = cart
 
-
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/RemoveItem', methods=['PUT', 'GET'])
+@app.route('/RemoveItem', methods=['DELETE', 'GET'])
 def removeItem():
     '''Removes an item from the user's cart'''
 
