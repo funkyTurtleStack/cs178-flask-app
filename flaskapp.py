@@ -33,6 +33,9 @@ dynamoTable = dynamodb.Table(DynamoTableName)
 ####### Functions #######
 def createSession(username, email):
     '''Creates a user session'''
+    if 'username' in session:
+        flash('You are already signed in', 'error')
+        return
     session.permanent = True
     session['username'] = username
     session['email'] = email
