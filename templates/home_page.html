@@ -35,10 +35,10 @@
             <div class="container">
                 <h1>{{session.get("username")}}'s Cart</h1>
                 {% for item in items %}
-                    {% set quantity = session.get('cart', {}).get(item['ID'] | string)}
+                    {% set quantity = session.get('cart', {}).get(item['ID'] | string)%}
                     {% if qty %}
                     <p>
-                          Item: {{item['description']}} | Count: ${{qty}} | Price: ${{item['price'] * qty}} | 
+                          Item: {{item['description']}} | Count: ${{qty}} | Price: ${{item['price'] * qty}}
                     </p>
                     <hr>
                     {% endif %}
