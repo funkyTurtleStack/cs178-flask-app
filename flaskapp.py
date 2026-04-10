@@ -31,7 +31,7 @@ dynamoTable = dynamodb.Table(DynamoTableName)
 
 ####### PAGE ROUTES #######
 
-@app.route('/l')
+@app.route('/')
 def landingPage():
     '''Brings user to the landing page and redirects if they are signed in'''
     
@@ -140,7 +140,7 @@ def makePurchase():
 
 
 ''''''
-@app.route('/')
+@app.route('/l')
 def home():
     return render_template('home.html')
 
