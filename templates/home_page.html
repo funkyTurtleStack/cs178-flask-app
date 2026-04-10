@@ -15,20 +15,22 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <div class="container">
-        <h1>Home Page</h1>
-        {% for item in items %}
-            <p>
-                {{item['description']}} | ${{item['price']}} | ({{item['name']}})
-            </p>
-            <form action="{{ url_for('addItem') }}" method="POST">
-                <input type="hidden" name="item_id" value="{{item['ID']}}">
-                <button type="submit">Add to Cart</button>
-            </form>
-            <hr>
-        {% endfor %}
+    <div style="display: flex;">
+        <div style="width: 60%; border: 1 px solid black;">
+            <div class="container">
+                <h1>Home Page</h1>
+                {% for item in items %}
+                    <p>
+                        {{item['description']}} | ${{item['price']}} | ({{item['name']}})
+                    </p>
+                    <form action="{{ url_for('addItem') }}" method="POST">
+                        <input type="hidden" name="item_id" value="{{item['ID']}}">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                    <hr>
+                {% endfor %}
+            </div>
+        </div>
     </div>
   </body>
 </html>
-
-Inventory.ID, Inventory.description, Inventory.price, Inventory.categoryID, Category.name
