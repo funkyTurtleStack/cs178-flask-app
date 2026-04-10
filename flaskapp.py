@@ -39,7 +39,7 @@ def createSession(username, email):
     session.permanent = True
     session['username'] = username
     session['email'] = email
-    session['cart'] = []
+    session['cart'] = {}
     flash('You are now logged in', 'success')
 
 
@@ -135,7 +135,7 @@ def signIn():
     flash('Incorrect credentials', 'error')
     return redirect(url_for('signInPage'))
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
+'''-=-=-=-=-'''
 @app.route('/SignOut', methods=['POST'])
 def signOut():
     '''Signs out user and deletes session'''
@@ -144,7 +144,6 @@ def signOut():
     session.clear()
     flash('You are now logged out', 'success')
     return redirect(url_for('landingPage'))
-
 
 @app.route('/CreateUser', methods=['POST'])
 def createUser():
@@ -212,11 +211,33 @@ def deleteAccount():
 def makePurchase():
     '''Reduces the stock of items in the database based on how many of each item the user has in their cart'''
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
+@app.route('/AddItem', methods=['PUT', 'GET'])
+def addItem():
+    '''Adds an item to the user's cart'''
+    #copies the cart
+    cart = session.get('cart', {})
+    #gets item_id from the form
+    item_id = request.form['item_id']
+    #adds one of the item to cart whether there is already one in the cart or not
+    cart[item_id] = cart.get(item_id, 0) + 1
+    #replaces the cart with the newly made one
+    session['cart'] = cart
 
 
+'''-=-=-=-=-=-=-=-=-=-=-'''
+@app.route('/RemoveItem', methods=['PUT', 'GET'])
+def removeItem():
+    '''Removes an item from the user's cart'''
 
 
-
+"""-!-!-!-!-!-TO ONLY BE USED FOR TESTING, REMOVE AFTER-!-!-!-!-!-"""
+@app.route('/debug-session')
+def debug_session():
+    return {
+        "session": dict(session)
+    }
+"""-!-!-!-!-!-TO ONLY BE USED FOR TESTING, REMOVE AFTER-!-!-!-!-!-"""
 
 
 
