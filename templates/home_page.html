@@ -31,6 +31,21 @@
                 {% endfor %}
             </div>
         </div>
+        <div style="width: 30%; border: 1px solid black;">
+            <div class="container">
+                <h1>Home Page</h1>
+                {% for item in items %}
+                    <p>
+                        {{item['description']}} | ${{item['price']}} | ({{item['name']}})
+                    </p>
+                    <form action="{{ url_for('addItem') }}" method="POST">
+                        <input type="hidden" name="item_id" value="{{item['ID']}}">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                    <hr>
+                {% endfor %}
+            </div>
+        </div>
     </div>
   </body>
 </html>
