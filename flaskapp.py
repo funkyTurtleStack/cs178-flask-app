@@ -50,7 +50,9 @@ def createSession(username, email):
 def landingPage():
     '''Brings user to the landing page and redirects if they are signed in'''
     
-    ######### if statement that redirects to home page if session exists #########
+    #if statement that redirects to home page if session exists
+    if 'username' in session:
+        return render_template('homePage')
     
     return render_template('landing_page.html')
     
@@ -86,16 +88,19 @@ def homePage():
 def userPage():
     '''Brings user to user page'''
 
+    ######### if statement that redirects to landing page if session doesn't exist #########
+
 '''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/CheckoutPage', methods=['GET'])
 def checkoutPage():
     '''Brings user ot checkout page'''
 
+    ######### if statement that redirects to landing page if session doesn't exist #########
+
 
 ####### Action Routes #######
 ##-!-!- No Encryption Yet -!-!-##
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/SignIn', methods=['POST'])
 def signIn():
     '''Signs in user and creates session'''
