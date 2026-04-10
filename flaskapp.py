@@ -30,6 +30,8 @@ DynamoRegionName = creds.DynamoRegion
 dynamodb = boto3.resource('dynamodb', region_name=DynamoRegionName)
 dynamoTable = dynamodb.Table(DynamoTableName)
 
+ge
+
 ####### Functions #######
 def createSession(username, email):
     '''Creates a user session'''
@@ -231,13 +233,6 @@ def removeItem():
     '''Removes an item from the user's cart'''
 
 
-"""-!-!-!-!-!-TO ONLY BE USED FOR TESTING, REMOVE AFTER-!-!-!-!-!-"""
-@app.route('/debug-session')
-def debug_session():
-    return {
-        "session": dict(session)
-    }
-"""-!-!-!-!-!-TO ONLY BE USED FOR TESTING, REMOVE AFTER-!-!-!-!-!-"""
 
 
 
@@ -314,7 +309,14 @@ def viewdb():
         ORDER BY Inventory.ID
         LIMIT 20
     """)
-    return rows
+    return render_template('home_page.html', items=rows)
+    #return rows
+
+@app.route('/DebugSession')
+def debugSession():
+    return {
+        "session": dict(session)
+    }
 
 """==============================================================="""
 
