@@ -52,7 +52,7 @@ def landingPage():
     
     #if statement that redirects to home page if session exists
     if 'username' in session:
-        return render_template('homePage')
+        return redirect(url_for('homePage'))
     
     return render_template('landing_page.html')
     
