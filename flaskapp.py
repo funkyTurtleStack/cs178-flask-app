@@ -34,7 +34,6 @@ def signInPage():
 
     return render_template('sign_in_page.html')
 
-
 @app.route('/SignUpPage', methods=['GET'])
 def signUpPage():
     '''Brings user to the sign up page'''
@@ -42,7 +41,6 @@ def signUpPage():
     ######### if statement that redirects to home page if session exists
 
     return render_template('sign_up_page.html')
-
 
 @app.route('/HomePage', methods=['GET'])
 def homePage():
@@ -71,6 +69,17 @@ def signOut():
 @app.route('/CreateUser', methods=['POST'])
 def createUser():
     '''Creates a new user (email must be unique)'''
+    # Extract form data
+    email = request.form['email']
+    username = request.form['username']
+    password = request.form['password']
+        
+    
+    
+    #need to make sure this only goes if it is successful
+    flash('User created successfully!', 'success')  # 'success' is a category; makes a green banner at the top
+    # Redirect to home page or another page upon successful submission
+    return redirect(url_for('landingPage'))
 
 @app.route('/ChangeUsername', methods=['PUT'])
 def changeUsername():
