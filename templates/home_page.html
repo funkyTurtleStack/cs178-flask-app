@@ -43,9 +43,7 @@
                     <hr>
                     {% endif %}
                 {% endfor %}
-                <form action="{{ url_for('addItem') }}" method="POST">
-                    <button type="submit">Go To Checkout</button>
-                </form>
+                <a href="/CheckoutPage" class="btn btn-primary">Go To Checkout</a>
             </div>
         </div>
     </div>
