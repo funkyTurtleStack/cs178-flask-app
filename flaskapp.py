@@ -232,6 +232,7 @@ def addItem():
     cart[item_id] = cart.get(item_id, 0) + 1
     #replaces the cart with the newly made one
     session['cart'] = cart
+    return redirect(url_for('homePage'))
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/RemoveItem', methods=['DELETE', 'GET'])
