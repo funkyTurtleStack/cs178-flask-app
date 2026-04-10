@@ -136,3 +136,8 @@ The JOIN query used in this project: <!-- describe it in plain English -->
 ## AI Assistance
 
 <!-- List any AI tools you used (e.g., ChatGPT) and briefly describe what you used them for. Per course policy, AI use is allowed but must be cited in code comments and noted here. -->
+
+# Used AI to help with stopping repeat users from entering the database
+# (In the '/CreateUser' route)
+https://chatgpt.com/share/69d8c034-1388-8333-a482-775330c54bc5
+

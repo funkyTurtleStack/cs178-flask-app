@@ -14,10 +14,20 @@ from dbCodeDynamo import*
 
 import boto3
 from boto3.dynamodb.conditions import Key
+from botocore.exceptions import ClientError
+
+import creds
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
                                    # it is required, but you can leave this alone
+
+#constants
+DynamoTableName = creds.TABLE_NAME_Dynamo
+DynamoRegionName = creds.DynamoRegion
+
+dynamodb = boto3.resource('dynamodb', region_name=DynamoRegionName)
+dynamoTable = dynamodb.Table(DynamoTableName)
 
 ####### PAGE ROUTES #######
 
@@ -25,7 +35,7 @@ app.secret_key = 'your_secret_key' # this is an artifact for using flash display
 def landingPage():
     '''Brings user to the landing page and redirects if they are signed in'''
     
-    ######### if statement that redirects to home page if session exists
+    ######### if statement that redirects to home page if session exists #########
     
     return render_template('landing_page.html')
     
@@ -33,7 +43,7 @@ def landingPage():
 def signInPage():
     '''Brings user to the signin page'''
 
-    ######### if statement that redirects to home page if session exists
+    ######### if statement that redirects to home page if session exists #########
 
     return render_template('sign_in_page.html')
 
@@ -41,7 +51,7 @@ def signInPage():
 def signUpPage():
     '''Brings user to the sign up page'''
 
-    ######### if statement that redirects to home page if session exists
+    ######### if statement that redirects to home page if session exists #########
 
     return render_template('sign_up_page.html')
 
@@ -76,12 +86,30 @@ def createUser():
     email = request.form['email']
     username = request.form['username']
     password = request.form['password']
-        
+
+    try: 
+        dynamoTable.put_item(
+            Item={
+                'Email': email,
+                'Password': password,
+                'UserName': username
+            },
+            ConditionExpression='attribute_not_exists(Email)'
+        )
+        flash('User created successfully!', 'success')
+
+        ######### create session and send them to the right page #########
+        return redirect(url_for('landingPage'))
+
+    except ClientError as e:
+        if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
+            flash('Email already exists! Please use a different email!', 'error')
+        else:
+            raise
     
-    
-    #need to make sure this only goes if it is successful
-    flash('User created successfully!', 'success')  # 'success' is a category; makes a green banner at the top
-    # Redirect to home page or another page upon successful submission
+    flash('User created successfully!', 'success')
+
+    ######### create session and send them to the right page
     return redirect(url_for('landingPage'))
 
 @app.route('/ChangeUsername', methods=['PUT'])
