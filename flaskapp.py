@@ -21,16 +21,28 @@ app.secret_key = 'your_secret_key' # this is an artifact for using flash display
 @app.route('/l')
 def landingPage():
     '''Brings user to the landing page and redirects if they are signed in'''
+    
     ######### if statement that redirects to home page if session exists
+    
     return render_template('landing_page.html')
     
 @app.route('/SignInPage', methods=['GET'])
 def signInPage():
     '''Brings user to the signin page'''
 
+    ######### if statement that redirects to home page if session exists
+
+    return render_template('sign_in_page.html')
+
+
 @app.route('/SignUpPage', methods=['GET'])
 def signUpPage():
     '''Brings user to the sign up page'''
+
+    ######### if statement that redirects to home page if session exists
+
+    return render_template('sign_up_page.html')
+
 
 @app.route('/HomePage', methods=['GET'])
 def homePage():
