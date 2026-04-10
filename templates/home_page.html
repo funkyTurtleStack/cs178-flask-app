@@ -22,7 +22,7 @@
                 {{item['description']}} | ${{item['price']}} | ({{item['name']}})
             </p>
             <form action="{{ url_for('addItem') }}" method="POST">
-                <input type="hidden" name="item_id" value="{{item[ID]}}">
+                <input type="hidden" name="item_id" value="{{item['ID']}}">
                 <button type="submit">Add to Cart</button>
             </form>
             <hr>
