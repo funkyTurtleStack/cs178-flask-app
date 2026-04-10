@@ -136,7 +136,7 @@ def signIn():
     return redirect(url_for('signInPage'))
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/SignOut', methods=['POST'])
+@app.route('/SignOut', methods=['POST', 'GET'])
 def signOut():
     '''Signs out user and deletes session'''
 
