@@ -38,7 +38,7 @@
                     {% set quantity = session.get('cart', {}).get(item['ID'] | string)%}
                     {% if quantity %}
                     <p>
-                          Item: {{item['description']}} | Count: ${{quantity}} | Price: ${{item['price'] * quantity}}
+                          Item: {{item['description']}} | Count: ${{quantity}} | Price: ${{(item['price'] * quantity) | round(2)}}
                     </p>
                     <hr>
                     {% endif %}
