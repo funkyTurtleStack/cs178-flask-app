@@ -30,7 +30,6 @@ DynamoRegionName = creds.DynamoRegion
 dynamodb = boto3.resource('dynamodb', region_name=DynamoRegionName)
 dynamoTable = dynamodb.Table(DynamoTableName)
 
-ge
 
 ####### Functions #######
 def createSession(username, email):
