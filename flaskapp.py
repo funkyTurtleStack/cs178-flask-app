@@ -55,7 +55,6 @@ def landingPage():
     
     return render_template('landing_page.html')
     
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/SignInPage', methods=['GET'])
 def signInPage():
     '''Brings user to the signin page'''
@@ -66,7 +65,6 @@ def signInPage():
 
     return render_template('sign_in_page.html')
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/SignUpPage', methods=['GET'])
 def signUpPage():
     '''Brings user to the sign up page'''
@@ -93,14 +91,18 @@ def homePage():
 def userPage():
     '''Brings user to user page'''
 
-    ######### if statement that redirects to landing page if session doesn't exist #########
+    #if statement that redirects to landing page if session doesn't exist
+    if 'username' not in session:
+        return redirect(url_for('landingPage'))
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/CheckoutPage', methods=['GET'])
 def checkoutPage():
     '''Brings user ot checkout page'''
 
-    ######### if statement that redirects to landing page if session doesn't exist #########
+    #if statement that redirects to landing page if session doesn't exist
+    if 'username' not in session:
+        return redirect(url_for('landingPage'))
 
 
 ####### Action Routes #######
@@ -137,6 +139,11 @@ def signIn():
 @app.route('/SignOut', methods=['POST'])
 def signOut():
     '''Signs out user and deletes session'''
+
+    #clear the session
+    session.clear()
+    flash('You are now logged out', 'success')
+    return redirect(url_for('landingPage'))
 
 
 @app.route('/CreateUser', methods=['POST'])
