@@ -30,6 +30,15 @@ DynamoRegionName = creds.DynamoRegion
 dynamodb = boto3.resource('dynamodb', region_name=DynamoRegionName)
 dynamoTable = dynamodb.Table(DynamoTableName)
 
+####### Functions #######
+def createSession(username, email):
+    '''Creates a user session'''
+    session.permanent = True
+    session['username'] = username
+    session['email'] = email
+    session['cart'] = []
+    flash('You are now logged in', 'success')
+
 
 ####### PAGE ROUTES #######
 
@@ -65,6 +74,10 @@ def signUpPage():
 def homePage():
     '''Brings user to the home page'''
 
+    ######### if statement that redirects to landing page if session doesn't exist #########
+
+    return render_template('home_page.html')
+
 '''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/UserPage', methods=['GET'])
 def userPage():
@@ -83,13 +96,34 @@ def checkoutPage():
 @app.route('/SignIn', methods=['POST'])
 def signIn():
     '''Signs in user and creates session'''
+    # Extract form data
+    email = request.form['email']
+    password = request.form['password']
+
+    #get user from table
+    user = dynamoTable.query(KeyConditionExpression=Key('Email').eq(email))
+    items = user.get('Items', [])
+
+    #check if email exists in database
+    if not items:
+        flash('Incorrect credentials', 'error')
+        return redirect(url_for('signInPage'))
+    
+    userInfo = items[0]
+
+    if(password == userInfo['Password']):
+        createSession(email, userInfo['Email'])
+        return redirect(url_for('homePage'))
+    
+    flash('Incorrect credentials', 'error')
+    return redirect(url_for('signInPage'))
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/SignOut', methods=['POST'])
 def signOut():
     '''Signs out user and deletes session'''
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
+
 @app.route('/CreateUser', methods=['POST'])
 def createUser():
     '''Creates a new user (email must be unique)'''
@@ -99,6 +133,7 @@ def createUser():
     password = request.form['password']
 
     try: 
+        #add new user to database
         dynamoTable.put_item(
             Item={
                 'Email': email,
@@ -110,14 +145,11 @@ def createUser():
         flash('User created successfully!', 'success')
 
         #creating a new session
-        session.permanent = True
-        session['username'] = username
-        session['email'] = email
-        session['cart'] = []
-        flash('You are now logged in', 'success')
+        createSession(username, email)
 
-        return redirect(url_for('landingPage'))
+        return redirect(url_for('homePage'))
 
+    #error handling
     except ClientError as e:
         if e.response['Error']['Code'] == 'ConditionalCheckFailedException':
             flash('Email already exists! Please use a different email!', 'error')
