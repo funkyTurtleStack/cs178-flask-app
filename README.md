@@ -144,3 +144,7 @@ https://chatgpt.com/share/69d8c034-1388-8333-a482-775330c54bc5
 # Used AI to get a refresher on routes as well as help understanding how to use flask sessions
 # (This was mostly while creating the '/CreateUser' route)
 https://claude.ai/share/630b7c78-8d92-4eaf-b58b-534fdead770c
+
+# Used AI to help with jinja
+# (This was mostly used in the making of home_page.html)
+https://claude.ai/share/53d23cc3-dec5-4652-b836-32c080eec938
