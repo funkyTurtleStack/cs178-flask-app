@@ -19,7 +19,7 @@
         <h1>Home Page</h1>
         {% for item in items %}
             <p>
-                {{item[0]}} | {{item[1]}} | {{item[2]}} | {{item[3]}} | {{item[4]}}
+                {{item['ID']}} | {{item['description']}} | {{item['price']}} | {{item['categoryID']}} | {{item['name']}}
             </p>
             <form action="{{ url_for('addItem') }}" method="POST">
                 <input type="hidden" name="item_id" value="{{ item[0] }}">
@@ -30,3 +30,5 @@
     </div>
   </body>
 </html>
+
+Inventory.ID, Inventory.description, Inventory.price, Inventory.categoryID, Category.name
