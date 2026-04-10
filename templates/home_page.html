@@ -33,7 +33,7 @@
         </div>
         <div style="width: 40%; border: 1px solid black;">
             <div class="container">
-                <h1>Home Page</h1>
+                <h1>{{session.get("username")}}'s Cart</h1>
                 {% for item in items %}
                     <p>
                         {{item['description']}} | ${{item['price']}} | ({{item['name']}})
