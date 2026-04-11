@@ -38,17 +38,13 @@
                     {% set quantity = session.get('cart', {}).get(item['ID'] | string)%}
                     {% if quantity %}
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <div>
-                            <p>
-                                Item: {{item['description']}} | Count: ${{quantity}} | Price: ${{(item['price'] * quantity) | round(2)}}
-                            </p>
-                        </div>
-                        <div>
-                            <form action="{{url_for('removeItem')}}" method="DELETE">
-                                <input type="hidden" name="item_id" value="{{item['ID']}}">
-                                <button type="submit">Remove</button>
-                            </form>
-                        </div>
+                        <p style="margin: 0;">
+                            Item: {{item['description']}} | Count: ${{quantity}} | Price: ${{(item['price'] * quantity) | round(2)}}
+                        </p>
+                        <form action="{{url_for('removeItem')}}" method="DELETE">
+                            <input type="hidden" name="item_id" value="{{item['ID']}}">
+                            <button type="submit">Remove</button>
+                        </form>
                     </div>
                     <hr>
                     {% endif %}
