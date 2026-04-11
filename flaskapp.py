@@ -218,6 +218,10 @@ def changeUsername():
             ExpressionAttributeValues={':u': username}
         )
 
+        if not username:
+            flash("Username cannot be empty", "error")
+            return redirect(url_for('userPage'))
+
         #update current session
         session['username'] = username
 
@@ -241,6 +245,10 @@ def changePassword():
             UpdateExpression='SET Password = :u',
             ExpressionAttributeValues={':u': password}
         )
+
+        if not password:
+            flash("Password cannot be empty", "error")
+            return redirect(url_for('userPage'))
 
         flash("Password has been updated", "success")
         return redirect(url_for('userPage'))
