@@ -213,7 +213,7 @@ def changeUsername():
     email = session.get('email')
 
     try:
-        dynamoTable.updat_item(
+        dynamoTable.update_item(
             Key = {'Email': email},
             UpdateExpression='SET UserName = :u',
             ExpressionAttributeValues={':u': username}
