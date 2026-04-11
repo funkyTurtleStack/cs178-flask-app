@@ -112,7 +112,15 @@ def checkoutPage():
     if 'username' not in session:
         return redirect(url_for('landingPage'))
 
-    return render_template('checkout_page.html')
+    rows = execute_query("""
+        SELECT Inventory.ID, Inventory.description, Inventory.price, Inventory.categoryID, Category.name
+        FROM Inventory
+        JOIN Category USING (categoryID)
+        ORDER BY Inventory.ID
+        LIMIT 20
+    """)
+
+    return render_template('checkout_page.html', item=rows)
 
 
 ####### Action Routes #######
