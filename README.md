@@ -1,14 +1,15 @@
-# [Your Project Name Here]
+# [Shop Project]
 
 **CS178: Cloud and Database Systems — Project #1**
-**Author:** [Your Name]
-**GitHub:** [your-username]
+**Author:** [Braedon Stapelman]
+**GitHub:** [funkyTurtleStack]
 
 ---
 
 ## Overview
 
 <!-- Describe your project in 2-4 sentences. What does it do? Who is it for? What problem does it solve? -->
+My Project is a verry bare bones shop project. You can sign in, add things to your cart, checkout, and change your user information. I have not incorporated encryption into this project simply because that makes it easier while making it and testing database interactions.
 
 ---
 
@@ -27,11 +28,20 @@
 ```
 ProjectOne/
 ├── flaskapp.py          # Main Flask application — routes and app logic
-├── dbCode.py            # Database helper functions (MySQL connection + queries)
+├── dbCodeDynamo.py      # Database helper functions for dynamo (doesn't really get used)
+├── dbCodeRDS.py         # Database helper functions for RDS (MySQL connection + queries)
 ├── creds_sample.py      # Sample credentials file (see Credential Setup below)
 ├── templates/
-│   ├── home.html        # Landing page
-│   ├── [other].html     # Add descriptions for your other templates
+│   ├── home.html        # From boilerplate (not used)
+│   ├── [other].html     # 
+│   ├── [other].html     # 
+│   ├── [other].html     # 
+│   ├── [other].html     # 
+│   ├── [other].html     # 
+│   ├── [other].html     # 
+│   ├── [other].html     # 
+│   ├── [other].html     # 
+│   ├── [other].html     # 
 ├── .gitignore           # Excludes creds.py and other sensitive files
 └── README.md
 ```

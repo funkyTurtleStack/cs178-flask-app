@@ -94,7 +94,6 @@ def homePage():
 
     return render_template('home_page.html', items=rows)
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/UserPage', methods=['GET'])
 def userPage():
     '''Brings user to user page'''
@@ -248,7 +247,6 @@ def changePassword():
         flash("An error occured", "error")
         return redirect(url_for('userPage'))
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/ChangeEmail', methods=['POST'])
 def changeEmail():
     '''Changes a user's email'''
@@ -283,7 +281,6 @@ def changeEmail():
         flash("An error occured", "error")
         return redirect(url_for('userPage'))
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/DeleteAccount', methods=['POST'])
 def deleteAccount():
     '''Deletes a user's account'''
@@ -298,7 +295,6 @@ def deleteAccount():
     except ClientError:
         flash("An error occured", "error")
         return redirect(url_for('userPage'))
-
 
 @app.route('/MakePurchase', methods=['POST'])
 def makePurchase():
