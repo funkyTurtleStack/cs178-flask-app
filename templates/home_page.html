@@ -42,9 +42,8 @@
                             Item: {{item['description']}} | Count: ${{quantity}} | Price: ${{(item['price'] * quantity) | round(2)}}
                         </p>
                         <form action="{{url_for('removeItem')}}" method="DELETE">
-                            ############################################
-                            ############################################
-                            ############################################
+                            <input type="hidden" name="item_id" value="{{item['ID']}}">
+                            <button type="submit">Remove</button>
                         </form>
                     </div>
                     <hr>
