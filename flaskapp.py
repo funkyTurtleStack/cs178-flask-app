@@ -218,10 +218,6 @@ def changeUsername():
             ExpressionAttributeValues={':u': username}
         )
 
-        if not username:
-            flash("Username cannot be empty", "error")
-            return redirect(url_for('userPage'))
-
         #update current session
         session['username'] = username
 
@@ -232,7 +228,6 @@ def changeUsername():
         flash("An error occured", "error")
         return redirect(url_for('userPage'))
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/ChangePassword', methods=['POST'])
 def changePassword():
     '''Changes a user's password'''
@@ -246,10 +241,6 @@ def changePassword():
             ExpressionAttributeValues={':u': password}
         )
 
-        if not password:
-            flash("Password cannot be empty", "error")
-            return redirect(url_for('userPage'))
-
         flash("Password has been updated", "success")
         return redirect(url_for('userPage'))
 
@@ -261,15 +252,53 @@ def changePassword():
 @app.route('/ChangeEmail', methods=['POST'])
 def changeEmail():
     '''Changes a user's email'''
-    #remember to incorporate flash message
-    #remember to make sure the user can only change their own
+    new_email = request.form.get('email')
+    old_email = session.get('email')
+
+    try:
+        response = dynamoTable.get_item(Key={'Email': old_email})
+        user = response['Item']
+
+        #create new user with changed email
+        dynamoTable.put_item(
+            Item={
+                'Email': new_email,
+                'Password': user['Password'],
+                'UserName': user['UserName']
+            }
+        )
+
+        #delete old user with old email
+        dynamoTable.delete_item(
+            Key={'Email': old_email}
+        )
+
+        #update the session
+        session['email'] = new_email
+
+        flash("Email updated", "success")
+        return redirect(url_for('userPage'))
+
+    except ClientError:
+        flash("An error occured", "error")
+        return redirect(url_for('userPage'))
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/DeleteAccount', methods=['POST'])
 def deleteAccount():
     '''Deletes a user's account'''
-    #remember to incorporate flash message
-    #remember to make sure the user can only delete their own
+    email = session['email']
+    try:
+        dynamoTable.delete_item(Key={'Email': email})
+    
+        session.clear()
+        flash("Account Deleted", "success")
+        return redirect(url_for('/'))
+    
+    except ClientError:
+        flash("An error occured", "error")
+        return redirect(url_for('userPage'))
+
 
 @app.route('/MakePurchase', methods=['POST'])
 def makePurchase():
