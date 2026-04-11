@@ -24,16 +24,15 @@
                     <p style="margin: 0;">
                         Item: {{item['description']}} | Count: {{quantity}} | Price: ${{(item['price'] * quantity) | round(2)}}
                     </p>
-                    <form action="{{url_for('removeItem')}}" method="POST">
-                        <input type="hidden" name="item_id" value="{{item['ID']}}">
-                        <button type="submit">Remove</button>
-                    </form>
                 </div>
                 <hr>
                 {% endif %}
             {% endfor %}
-            <form action="{{url_for('checkoutPage')}}" method="GET">
-                <button type="submit">Go To Checkout</button>
+            <p>
+                Total: ${{total}}
+            </p>
+            <form action="{{url_for('makePurchase')}}" method="GET">
+                <button type="submit">Checkout</button>
             </form>
         </div>
     </body>

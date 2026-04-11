@@ -120,7 +120,16 @@ def checkoutPage():
         LIMIT 20
     """)
 
-    return render_template('checkout_page.html', items=rows)
+    #get total price
+    cart= session.get('cart', {})
+    total = 0
+    for item_id, quantity in cart.items():
+        row = execute_query("""SELECT price FROM Inventory WHERE ID = %s""", (item_id,))
+        if row:
+            price = row[0]['price']
+            total += price * quantity
+
+    return render_template('checkout_page.html', items=rows, total=total)
 
 
 ####### Action Routes #######
@@ -240,7 +249,7 @@ def makePurchase():
 
     #deletes their cart
     session.pop('cart')
-
+    flash(f'You made a purchase of ${round(total, 2)}', 'success')
     return redirect(url_for('homePage'))
 
 @app.route('/AddItem', methods=['POST', 'GET'])
