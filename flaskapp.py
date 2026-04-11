@@ -293,7 +293,7 @@ def deleteAccount():
     
         session.clear()
         flash("Account Deleted", "success")
-        return redirect(url_for('/'))
+        return redirect(url_for('landingPage'))
     
     except ClientError:
         flash("An error occured", "error")
