@@ -206,28 +206,28 @@ def createUser():
             raise
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/ChangeUsername', methods=['PUT'])
+@app.route('/ChangeUsername', methods=['POST'])
 def changeUsername():
     '''Changes a user's username'''
     #remember to incorporate flash message
     #remember to make sure the user can only change their own
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/ChangePassword', methods=['PUT'])
+@app.route('/ChangePassword', methods=['POST'])
 def changePassword():
     '''Changes a user's password'''
     #remember to incorporate flash message
     #remember to make sure the user can only change their own
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/ChangeEmail', methods=['PUT'])
+@app.route('/ChangeEmail', methods=['POST'])
 def changeEmail():
     '''Changes a user's email'''
     #remember to incorporate flash message
     #remember to make sure the user can only change their own
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/DeleteAccount', methods=['PUT'])
+@app.route('/DeleteAccount', methods=['POST'])
 def deleteAccount():
     '''Deletes a user's account'''
     #remember to incorporate flash message
