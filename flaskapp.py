@@ -205,7 +205,6 @@ def createUser():
         else:
             raise
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/ChangeUsername', methods=['POST'])
 def changeUsername():
     '''Changes a user's username'''
@@ -233,8 +232,22 @@ def changeUsername():
 @app.route('/ChangePassword', methods=['POST'])
 def changePassword():
     '''Changes a user's password'''
-    #remember to incorporate flash message
-    #remember to make sure the user can only change their own
+    password = request.form.get('password')
+    email = session.get('email')
+
+    try:
+        dynamoTable.update_item(
+            Key = {'Email': email},
+            UpdateExpression='SET Password = :u',
+            ExpressionAttributeValues={':u': password}
+        )
+
+        flash("Password has been updated", "success")
+        return redirect(url_for('userPage'))
+
+    except ClientError:
+        flash("An error occured", "error")
+        return redirect(url_for('userPage'))
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/ChangeEmail', methods=['POST'])
