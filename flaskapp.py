@@ -144,7 +144,6 @@ def signIn():
     flash('Incorrect credentials', 'error')
     return redirect(url_for('signInPage'))
 
-'''-=-=-=-=-'''
 @app.route('/SignOut', methods=['POST'])
 def signOut():
     '''Signs out user and deletes session'''
@@ -215,10 +214,25 @@ def deleteAccount():
     #remember to incorporate flash message
     #remember to make sure the user can only delete their own
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
+'''-=-=-=-=-'''
 @app.route('/MakePurchase', methods=['POST'])
 def makePurchase():
-    '''Reduces the stock of items in the database based on how many of each item the user has in their cart'''
+    '''Removes all items from the user's cart and gives them a summary'''
+    #getting cart
+    cart= session.get('cart', {})
+
+    #finding the total price
+    total = 0
+    for item_id, quantity in cart.items():
+        row = execute_query("""SELECT price FROM Inventory WHERE ID = %s""", (item_id,))
+        if row:
+            price = row[0]['price']
+            total += price * quantity
+
+    #deletes their cart
+    session.pop('cart')
+
+    return redirect(url_for('homePage'))
 
 @app.route('/AddItem', methods=['POST', 'GET'])
 def addItem():
