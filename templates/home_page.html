@@ -39,7 +39,7 @@
                     {% if quantity %}
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <p style="margin: 0;">
-                            Item: {{item['description']}} | Count: ${{quantity}} | Price: ${{(item['price'] * quantity) | round(2)}}
+                            Item: {{item['description']}} | Count: {{quantity}} | Price: ${{(item['price'] * quantity) | round(2)}}
                         </p>
                         <form action="{{url_for('removeItem')}}" method="DELETE">
                             <input type="hidden" name="item_id" value="{{item['ID']}}">
