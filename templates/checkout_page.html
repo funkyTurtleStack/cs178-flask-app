@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Home Page</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="container">
+            <h1>{{session.get("username")}}'s Cart</h1>
+            {% for item in items %}
+                {% set quantity = session.get('cart', {}).get(item['ID'] | string)%}
+                {% if quantity %}
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <p style="margin: 0;">
+                        Item: {{item['description']}} | Count: {{quantity}} | Price: ${{(item['price'] * quantity) | round(2)}}
+                    </p>
+                    <form action="{{url_for('removeItem')}}" method="POST">
+                        <input type="hidden" name="item_id" value="{{item['ID']}}">
+                        <button type="submit">Remove</button>
+                    </form>
+                </div>
+                <hr>
+                {% endif %}
+            {% endfor %}
+            <form action="{{url_for('checkoutPage')}}" method="GET">
+                <button type="submit">Go To Checkout</button>
+            </form>
+        </div>
+    </body>
+</html>

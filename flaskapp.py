@@ -76,7 +76,6 @@ def signUpPage():
 
     return render_template('sign_up_page.html')
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/HomePage', methods=['GET'])
 def homePage():
     '''Brings user to the home page'''
@@ -112,6 +111,8 @@ def checkoutPage():
     #if statement that redirects to landing page if session doesn't exist
     if 'username' not in session:
         return redirect(url_for('landingPage'))
+
+    return render_template('')
 
 
 ####### Action Routes #######
