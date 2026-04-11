@@ -112,7 +112,7 @@ def checkoutPage():
     if 'username' not in session:
         return redirect(url_for('landingPage'))
 
-    return render_template('')
+    return render_template('checkout_page.html')
 
 
 ####### Action Routes #######
