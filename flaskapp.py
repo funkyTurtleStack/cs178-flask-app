@@ -220,7 +220,6 @@ def deleteAccount():
 def makePurchase():
     '''Reduces the stock of items in the database based on how many of each item the user has in their cart'''
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/AddItem', methods=['POST', 'GET'])
 def addItem():
     '''Adds an item to the user's cart'''
@@ -228,7 +227,7 @@ def addItem():
     cart = session.get('cart', {})
     #gets item_id from the form
     item_id = request.form['item_id']
-    #adds one of the item to cart whether there is already one in the cart or not
+    #adds one of that item to the cart
     cart[item_id] = cart.get(item_id, 0) + 1
     #replaces the cart with the newly made one
     session['cart'] = cart
@@ -238,6 +237,18 @@ def addItem():
 @app.route('/RemoveItem', methods=['DELETE', 'GET'])
 def removeItem():
     '''Removes an item from the user's cart'''
+    #copies the cart
+    cart = session.get('cart', {})
+    #gets item_id from the form
+    item_id = request.form['item_id']
+    #removes one of that item from the cart or delete it entirely if there is one
+    if(cart[item_id] <= 1):
+        cart.pop(item_id, None)
+    else:
+        cart[item_id] = cart.get(item_id, 0) - 1
+    #replaces the cart with the newly made one
+    session['cart'] = cart
+    return redirect(url_for('homePage'))
 
 
 
