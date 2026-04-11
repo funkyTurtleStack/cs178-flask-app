@@ -37,7 +37,7 @@
                 {% for item in items %}
                     {% set quantity = session.get('cart', {}).get(item['ID'] | string)%}
                     {% if quantity %}
-                    <div style="display: flex;">
+                    <div style="display: flex; align-items: center;">
                         <p>
                             Item: {{item['description']}} | Count: ${{quantity}} | Price: ${{(item['price'] * quantity) | round(2)}}
                         </p>
