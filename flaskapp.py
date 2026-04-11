@@ -120,7 +120,7 @@ def checkoutPage():
         LIMIT 20
     """)
 
-    return render_template('checkout_page.html', item=rows)
+    return render_template('checkout_page.html', items=rows)
 
 
 ####### Action Routes #######
