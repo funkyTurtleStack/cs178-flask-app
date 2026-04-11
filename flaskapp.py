@@ -252,7 +252,7 @@ def makePurchase():
     flash(f'You made a purchase of ${round(total, 2)}', 'success')
     return redirect(url_for('homePage'))
 
-@app.route('/AddItem', methods=['POST', 'GET'])
+@app.route('/AddItem', methods=['POST'])
 def addItem():
     '''Adds an item to the user's cart'''
     #copies the cart
@@ -265,7 +265,7 @@ def addItem():
     session['cart'] = cart
     return redirect(url_for('homePage'))
 
-@app.route('/RemoveItem', methods=['POST', 'GET'])
+@app.route('/RemoveItem', methods=['POST'])
 def removeItem():
     '''Removes an item from the user's cart'''
     #copies the cart
