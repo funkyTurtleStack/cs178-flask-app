@@ -233,7 +233,6 @@ def addItem():
     session['cart'] = cart
     return redirect(url_for('homePage'))
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/RemoveItem', methods=['POST', 'GET'])
 def removeItem():
     '''Removes an item from the user's cart'''
