@@ -227,7 +227,7 @@ def changeEmail():
     #remember to make sure the user can only change their own
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/DeleteAccount', methods=['DELETE'])
+@app.route('/DeleteAccount', methods=['PUT'])
 def deleteAccount():
     '''Deletes a user's account'''
     #remember to incorporate flash message
