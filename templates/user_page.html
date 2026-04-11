@@ -22,6 +22,11 @@
             <input type="text" id="email" name="email" required /><br />
             <input type="submit" value="Change" />
         </form>
+        <form action="{{ url_for('createUser') }}" method="post">
+            <label for="email">Change Email:</label><br />
+            <input type="text" id="email" name="email" required /><br />
+            <input type="submit" value="Change" />
+        </form>
         <a href="/">Back</a>
     </div>
   </body>
