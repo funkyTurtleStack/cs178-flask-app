@@ -31,11 +31,11 @@
             <p>
                 Total: ${{total | round(2)}}
             </p>
-            <div style="display: flex;">
-                <form action="{{url_for('makePurchase')}}" method="POST">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <form action="{{url_for('makePurchase')}}" style="margin: 0;" method="POST">
                     <button type="submit">Checkout</button>
                 </form>
-                <a href="{{url_for('homePage')}}"> Back</a>
+                <a href="{{url_for('homePage')}}">Back</a>
             </div>
         </div>
     </body>
