@@ -103,6 +103,8 @@ def userPage():
     if 'username' not in session:
         return redirect(url_for('landingPage'))
 
+    return render_template('user_page.html')
+
 @app.route('/CheckoutPage', methods=['GET'])
 def checkoutPage():
     '''Brings user ot checkout page'''

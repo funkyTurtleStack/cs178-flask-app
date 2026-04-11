@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Sign In</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="container">
+        <h1 class="mt-5">Sign In</h1>
+        <form action="{{ url_for('signIn') }}" method="post">
+            <label for="email">Email:</label><br />
+            <input type="text" id="email" name="email" required /><br />
+            <label for="password">Password:</label><br />
+            <input class='mb-2' type="text" id="password" name="password" required /><br />
+            <input type="submit" value="Submit" />
+            <a href="/">Back</a>
+        </form>
+    </div>
+  </body>
+</html>
