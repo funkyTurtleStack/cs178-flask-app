@@ -209,8 +209,25 @@ def createUser():
 @app.route('/ChangeUsername', methods=['POST'])
 def changeUsername():
     '''Changes a user's username'''
-    #remember to incorporate flash message
-    #remember to make sure the user can only change their own
+    username = request.form.get('username')
+    email = session.get('email')
+
+    try:
+        dynamoTable.updat_item(
+            Key = {'Email': email},
+            UpdateExpression='SET UserName = :u',
+            ExpressionAttributeValues={':u': username}
+        )
+
+        #update current session
+        session['username'] = username
+
+        flash("Username has been updated", "success")
+        return redirect(url_for('userPage'))
+
+    except ClientError:
+        flash("An error occured", "error")
+        return redirect(url_for('userPage'))
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/ChangePassword', methods=['POST'])
