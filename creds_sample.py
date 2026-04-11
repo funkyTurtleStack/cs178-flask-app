@@ -1,0 +1,6 @@
+host = "your-rds-endpoint"
+user = "admin"
+password = "your-password"
+db = "your-database-name"
+Table_Name_Dynamo = "dynamo table name for users"
+DynamoRegion = "dynamo database's region"

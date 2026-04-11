@@ -162,7 +162,7 @@ def signIn():
     flash('Incorrect credentials', 'error')
     return redirect(url_for('signInPage'))
 
-@app.route('/SignOut', methods=['POST'])
+@app.route('/SignOut', methods=['POST', 'DELETE'])
 def signOut():
     '''Signs out user and deletes session'''
 
@@ -204,7 +204,7 @@ def createUser():
         else:
             raise
 
-@app.route('/ChangeUsername', methods=['POST'])
+@app.route('/ChangeUsername', methods=['POST', 'PUT'])
 def changeUsername():
     '''Changes a user's username'''
     username = request.form.get('username')
@@ -227,7 +227,7 @@ def changeUsername():
         flash("An error occured", "error")
         return redirect(url_for('userPage'))
 
-@app.route('/ChangePassword', methods=['POST'])
+@app.route('/ChangePassword', methods=['POST', 'PUT'])
 def changePassword():
     '''Changes a user's password'''
     password = request.form.get('password')
@@ -247,7 +247,7 @@ def changePassword():
         flash("An error occured", "error")
         return redirect(url_for('userPage'))
 
-@app.route('/ChangeEmail', methods=['POST'])
+@app.route('/ChangeEmail', methods=['POST', 'PUT'])
 def changeEmail():
     '''Changes a user's email'''
     new_email = request.form.get('email')
@@ -281,7 +281,7 @@ def changeEmail():
         flash("An error occured", "error")
         return redirect(url_for('userPage'))
 
-@app.route('/DeleteAccount', methods=['POST'])
+@app.route('/DeleteAccount', methods=['POST', 'DELETE'])
 def deleteAccount():
     '''Deletes a user's account'''
     email = session['email']
@@ -315,7 +315,7 @@ def makePurchase():
     flash(f'You made a purchase of ${round(total, 2)}', 'success')
     return redirect(url_for('homePage'))
 
-@app.route('/AddItem', methods=['POST'])
+@app.route('/AddItem', methods=['POST', 'PUT'])
 def addItem():
     '''Adds an item to the user's cart'''
     #copies the cart
@@ -328,7 +328,7 @@ def addItem():
     session['cart'] = cart
     return redirect(url_for('homePage'))
 
-@app.route('/RemoveItem', methods=['POST'])
+@app.route('/RemoveItem', methods=['POST', 'PUT'])
 def removeItem():
     '''Removes an item from the user's cart'''
     #copies the cart
