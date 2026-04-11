@@ -103,7 +103,6 @@ def userPage():
     if 'username' not in session:
         return redirect(url_for('landingPage'))
 
-'''-=-=-=-=-=-=-=-=-=-=-'''
 @app.route('/CheckoutPage', methods=['GET'])
 def checkoutPage():
     '''Brings user ot checkout page'''
@@ -232,7 +231,6 @@ def deleteAccount():
     #remember to incorporate flash message
     #remember to make sure the user can only delete their own
 
-'''-=-=-=-=-'''
 @app.route('/MakePurchase', methods=['POST'])
 def makePurchase():
     '''Removes all items from the user's cart and gives them a summary'''
