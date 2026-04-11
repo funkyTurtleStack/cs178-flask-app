@@ -234,7 +234,7 @@ def addItem():
     return redirect(url_for('homePage'))
 
 '''-=-=-=-=-=-=-=-=-=-=-'''
-@app.route('/RemoveItem', methods=['DELETE', 'GET'])
+@app.route('/RemoveItem', methods=['POST', 'GET'])
 def removeItem():
     '''Removes an item from the user's cart'''
     #copies the cart
