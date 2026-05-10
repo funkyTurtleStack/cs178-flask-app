@@ -27,22 +27,22 @@ My Project is a verry bare bones shop project. You can sign in, add things to yo
 
 ```
 ProjectOne/
-├── flaskapp.py          # Main Flask application — routes and app logic
-├── dbCodeDynamo.py      # Database helper functions for dynamo (doesn't really get used)
-├── dbCodeRDS.py         # Database helper functions for RDS (MySQL connection + queries)
-├── creds_sample.py      # Sample credentials file (see Credential Setup below)
+├── flaskapp.py                # Main Flask application — routes and app logic
+├── dbCodeDynamo.py            # Database helper functions for dynamo (doesn't really get used)
+├── dbCodeRDS.py               # Database helper functions for RDS (MySQL connection + queries)
+├── creds_sample.py            # Sample credentials file (see Credential Setup below)
 ├── templates/
-│   ├── home.html        # From boilerplate (not used)
-│   ├── [other].html     # 
-│   ├── [other].html     # 
-│   ├── [other].html     # 
-│   ├── [other].html     # 
-│   ├── [other].html     # 
-│   ├── [other].html     # 
-│   ├── [other].html     # 
-│   ├── [other].html     # 
-│   ├── [other].html     # 
-├── .gitignore           # Excludes creds.py and other sensitive files
+│   ├── home.html              # From boilerplate (not used)
+│   ├── add_user.html          # From boilerplate (not used)
+│   ├── delete_user.html       # From boilerplate (not used)
+│   ├── display_users.html     # From boilerplate (not used)
+│   ├── landing_page.html      # Where the user is sent to when they aren't logged in
+│   ├── sign_in_page.html      # Page for signing in
+│   ├── sign_up_page.html      # Page for making a new account
+│   ├── home_page.html         # Page where you can add and remove items from your shopping cart
+│   ├── user_page.html         # Page where users can change their user info or delete their account
+│   ├── checkout_page.html     # Page where users "checkout"
+├── .gitignore                 # Excludes creds.py and other sensitive files
 └── README.md
 ```
 
@@ -53,7 +53,7 @@ ProjectOne/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/funkyTurtleStack/cs178-flask-app.git
    cd your-repo-name
    ```
 
@@ -80,7 +80,7 @@ ProjectOne/
 The app is deployed on an AWS EC2 instance. To view the live version:
 
 ```
-http://[your-ec2-public-ip]:8080
+http://http://ec2-54-198-18-249.compute-1.amazonaws.com:8080
 ```
 
 _(Note: the EC2 instance may not be running after project submission.)_
@@ -99,6 +99,8 @@ host = "your-rds-endpoint"
 user = "admin"
 password = "your-password"
 db = "your-database-name"
+Table_Name_Dynamo = "dynamo table name for users"
+DynamoRegion = "dynamo database's region"
 ```
 
 ---
@@ -107,39 +109,63 @@ db = "your-database-name"
 
 ### SQL (MySQL on RDS)
 
-<!-- Briefly describe your relational database schema. What tables do you have? What are the key relationships? -->
+For my relational database there are two tables. One for item categories and one for item info.
 
 **Example:**
 
-- `[TableName]` — stores [description]; primary key is `[key]`
-- `[TableName]` — stores [description]; foreign key links to `[other table]`
+- `[Categories]` — categoryID, name; primary key is `[categoryID]`
+- `[Inventory]` — ID, description, price, categoryID; primary key is `[ID]`; foreign key links to `[Categories]`
 
-The JOIN query used in this project: <!-- describe it in plain English -->
+The JOIN query used in this project: 
+
+rows = execute_query("""
+        SELECT Inventory.ID, Inventory.description, Inventory.price, Inventory.categoryID, Category.name
+        FROM Inventory
+        JOIN Category USING (categoryID)
+        ORDER BY Inventory.ID
+        LIMIT 20
+    """)
+
+    It was used to combine the two tables so the item category could be listed for each item.
 
 ### DynamoDB
 
-<!-- Describe your DynamoDB table. What is the partition key? What attributes does each item have? How does it connect to the rest of the app? -->
+Mt dynamoDB table is just a users table.
 
-- **Table name:** `[your-table-name]`
-- **Partition key:** `[key-name]`
-- **Used for:** [description]
+- **Table name:** `Users`
+- **Partition key:** `Email`
+- **Other Column**  `Password`
+- **Other Column**  `UserName`
 
 ---
 
 ## CRUD Operations
 
-| Operation | Route      | Description    |
-| --------- | ---------- | -------------- |
-| Create    | `/[route]` | [what it does] |
-| Read      | `/[route]` | [what it does] |
-| Update    | `/[route]` | [what it does] |
-| Delete    | `/[route]` | [what it does] |
+| Operation       | Route              | Description                    |
+| ---------       | ----------         | --------------                 |
+| GET             | `/`                | redirects to the landing page  |
+| GET             | `/SignInPage`      | redirects to the sign in page  |
+| GET             | `/SignUpPage`      | redirects to the sign up page  |
+| GET             | `/HomePage`        | redirects to the home page     |
+| GET             | `/UserPage`        | redirects to the user page     |
+| GET             | `/CheckoutPage`    | redirects to the checkout page |S
+| POST            | `/SignIn`          | signs in user                  |
+| POST, Delete    | `/SignOut`         | signs out user                 |
+| POST            | `/CreateUser`      | creates a new user             |
+| POST, PUT       | `/ChangeUsername`  | changes a user's name          |
+| POST, PUT       | `/ChangePassword`  | changes a user's password      |
+| POST, PUT       | `/ChangeEmail`     | changes a user's email         |
+| POST, DELETE    | `/DeleteAccount`   | deletes a user's account       |
+| POST            | `/MakePurchase`    | makes a purchase               |
+| POST, PUT       | `/AddItem`         | adds an item to the cart       |
+| POST, PUT       | `/RemoveItem`      | removes an item from the cart  |
 
 ---
 
 ## Challenges and Insights
 
 <!-- What was the hardest part? What did you learn? Any interesting design decisions? -->
+The hardest part was probably getting the html to load with the right data. I learned how to use JINJA. I decided to use flask sessions for the cart.
 
 ---
 
