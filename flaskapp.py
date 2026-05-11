@@ -16,6 +16,7 @@ from botocore.exceptions import ClientError
 import creds
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # 1 year in seconds
 
 #-!-!-!-!-!- In the actual thing make sure this is actually a secret string -!-!-!-!-!-#
 app.secret_key = 'your_secret_key' # this is an artifact for using flash displays; 
