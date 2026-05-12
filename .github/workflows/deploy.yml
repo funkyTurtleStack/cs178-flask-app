@@ -25,6 +25,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
@@ -49,3 +54,18 @@ jobs:
           sleep 1
           echo "Deploy complete. Flask restarted."
           REMOTE
+
+      - name: Invalidate CloudFront cache
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- static/ | sed 's|^|/|' | tr '\n' ' ')
+          if [ -n "$CHANGED" ]; then
+            aws cloudfront create-invalidation \
+              --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+              --paths $CHANGED
+          else
+            echo "No static files changed, skipping invalidation."
+          fi
